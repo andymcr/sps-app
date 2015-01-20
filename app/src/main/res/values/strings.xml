@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sale Photographic Society</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_menu_label_events">Events</string>
+    <string name="navigation_menu_label_competitions">Competitions</string>
+    <string name="navigation_menu_label_talks">Talks</string>
+
+    <string name="tab_label_past">Past</string>
+    <string name="tab_label_future">Future</string>
+
+    <string name="summary_date_pattern">d MMM</string>
+    <string name="full_date_pattern">d MMM yyyy</string>
+
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+</resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+     </style>
+
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/spsColorPrimary</item>
+        <item name="colorPrimaryDark">@color/spsColorPrimaryDark</item>
+        <item name="colorAccent">@color/spsColorAccent</item>
+        <item name="colorControlActivated">@color/spsColorControlActivated</item>
+        <item name="colorControlHighlight">@color/spsColorControlHighlight</item>
+        <item name="colorControlNormal">@color/spsColorControlNormal</item>
+        <item name="android:textColorPrimary">@color/spsTextColorPrimary</item>
+        <!-- item name="android:background">@color/spsColorBackground</item -->
+    </style>
+
+    <style name="NavigationMenu" parent="AppTheme">
+        <!-- Cannot get selector to set normal colour, so using selector on items -->
+        <!-- item name="android:listSelector">@drawable/menu_background_selector</item -->
+    </style>
+
+    <style name="NavigationHeader" parent="AppTheme">
+        <item name="android:background">@color/spsColorPrimary</item>
+    </style>
+
+    <style name="NavigationHeader.Title" parent="NavigationHeader">
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:textColor">@color/spsColorBackground</item>
+    </style>
+
+    <style name="NavigationItem" parent="AppTheme">
+        <item name="android:layout_width">@dimen/navigation_drawer_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/default_padding</item>
+        <item name="android:paddingEnd">@dimen/default_padding</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
+        <!-- Cannot get list selector to set normal colour, so using selector on items -->
+        <item name="android:background">@drawable/menu_background_selector</item>
+    </style>
+
+    <style name="Toolbar" parent="AppTheme">
+        <item name="android:background">@color/spsColorPrimary</item>
+    </style>
+
+    <style name="SummaryPager.Tabs" parent="AppTheme">
+        <item name="android:paddingTop">@dimen/tab_padding</item>
+        <item name="android:paddingBottom">@dimen/tab_padding</item>
+        <item name="android:paddingStart">@dimen/default_padding</item>
+        <item name="android:paddingEnd">@dimen/default_padding</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
+        <item name="android:background">@color/spsColorPrimary</item>
+    </style>
+
+    <style name="SummaryItem" parent="AppTheme">
+        <item name="android:minHeight">?android:attr/listPreferredItemHeightSmall</item>
+        <item name="android:paddingStart">@dimen/default_padding</item>
+        <item name="android:paddingEnd">@dimen/default_padding</item>
+    </style>
+
+    <style name="SummaryItemField" parent="AppTheme">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
+        <item name="android:colorBackground">@color/spsColorBackground</item>
+    </style>
+
+    <style name="DetailsFrame" parent="AppTheme">
+
+    </style>
+
+    <style name="DetailsField" parent="AppTheme">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
+        <item name="android:paddingStart">@dimen/default_padding</item>
+        <item name="android:paddingEnd">@dimen/default_padding</item>
+    </style>
+</resources>
+

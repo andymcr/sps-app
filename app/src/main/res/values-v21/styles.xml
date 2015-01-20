@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/spsColorPrimary</item>
+        <item name="colorPrimaryDark">@color/spsColorPrimaryDark</item>
+        <item name="colorAccent">@color/spsColorAccent</item>
+        <item name="colorControlActivated">@color/spsColorControlActivated</item>
+        <item name="colorControlHighlight">@color/spsColorControlHighlight</item>
+        <item name="colorControlNormal">@color/spsColorControlNormal</item>
+        <item name="android:textColorPrimary">@color/spsTextColorPrimary</item>
+        <item name="android:colorBackground">@color/spsColorBackground</item>
+    </style>
+</resources>
