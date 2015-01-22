@@ -4,9 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Pair;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -32,15 +30,6 @@ abstract public class AbstractListFragment extends ListFragment {
     private Pair<String, AbstractListEvent.Order> order;
     private Bus bus;
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = super.onCreateView(inflater, container, savedInstanceState);
-
-//        ButterKnife.inject(this, view);
-
-        return view;
-    }
 
     @Override
     public void onViewCreated(final View view, final Bundle savedInstanceState) {

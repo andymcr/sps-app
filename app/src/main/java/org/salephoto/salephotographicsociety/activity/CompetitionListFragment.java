@@ -13,9 +13,10 @@ import com.squareup.otto.Subscribe;
 import org.salephoto.models.Competition;
 import org.salephoto.salephotographicsociety.R;
 import org.salephoto.salephotographicsociety.events.CompetitionsListedEvent;
+import org.salephoto.salephotographicsociety.events.ListCompetitionsEvent;
 
 
-public class CompetitionListFragment extends AbstractEventListFragment<Competition> {
+public class CompetitionListFragment extends AbstractEventListFragment {
     private CompetitionListAdapter adapter;
 
     public interface CompetitionListListener {
@@ -28,6 +29,11 @@ public class CompetitionListFragment extends AbstractEventListFragment<Competiti
 
         adapter = new CompetitionListAdapter(getActivity());
         setListAdapter(adapter);
+    }
+
+    public void requestItems() {
+        getBus().post(new ListCompetitionsEvent(getArguments().getInt(ARG_ID),
+            getBefore(), getAfter(), 5, getListAdapter().getCount(), getOrder()));
     }
 
     @Subscribe

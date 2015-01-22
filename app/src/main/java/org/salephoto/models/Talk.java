@@ -5,20 +5,6 @@ import android.os.Parcel;
 
 public class Talk extends EventCore {
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    protected Talk(final Parcel parcel) {
-        super(parcel);
-    }
-
-    @Override
-    public void writeToParcel(final Parcel parcel, final int flags) {
-        super.writeToParcel(parcel, flags);
-    }
-
-    @Override
     public int hashCode() {
         return getId();
     }

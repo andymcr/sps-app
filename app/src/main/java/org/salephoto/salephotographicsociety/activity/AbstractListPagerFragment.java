@@ -18,7 +18,7 @@ public class AbstractListPagerFragment extends Fragment {
         return inflater.inflate(R.layout.summary_list, container, false);
     }
 
-    protected abstract class ListPagerAdapter extends FragmentPagerAdapter {
+   protected abstract class ListPagerAdapter extends FragmentPagerAdapter {
         public ListPagerAdapter(FragmentManager fm) {
             super(fm);
         }

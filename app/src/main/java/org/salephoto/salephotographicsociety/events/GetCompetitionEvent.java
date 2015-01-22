@@ -4,7 +4,7 @@ import org.salephoto.salephotographicsociety.repository.EntryOrder;
 import org.salephoto.salephotographicsociety.repository.SectionOrder;
 
 
-public class GetCompetitionEvent extends AbstractGetEvent {
+public class GetCompetitionEvent extends AbstractEvent {
     private int competitionId;
     private SectionOrder sectionOrder = SectionOrder.UNSPECIFIED;
     private EntryOrder entryOrder = EntryOrder.UNSPECIFIED;

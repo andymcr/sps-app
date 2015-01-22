@@ -1,11 +1,11 @@
 package org.salephoto.salephotographicsociety.activity;
 
-import org.salephoto.salephotographicsociety.events.ListEventEvent;
+import android.util.Log;
 
 import java.util.Date;
 
 
-public class AbstractEventListFragment<T> extends AbstractListFragment {
+public abstract class AbstractEventListFragment extends AbstractListFragment {
     public static final String ARG_BEFORE_DATE  = "before";
     public static final String ARG_AFTER_DATE = "after";
 
@@ -32,12 +32,13 @@ public class AbstractEventListFragment<T> extends AbstractListFragment {
             after = (Date) getArguments().getSerializable(ARG_AFTER_DATE);
         }
 
-        requestItems();
+        if (getListAdapter().getCount() == 0) {
+            requestItems();
+        } else {
+            Log.d(getClass().getSimpleName(), "View already contains "  + getListAdapter().getCount() + " items");
+        }
     }
 
-    public void requestItems() {
-        getBus().post(new ListEventEvent<T>(getArguments().getInt(ARG_ID),
-            getBefore(), getAfter(), 5, getListAdapter().getCount(), getOrder()));
-    }
+    public abstract void requestItems();
 
 }

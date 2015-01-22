@@ -13,10 +13,10 @@ import android.widget.ListView;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import org.salephoto.salephotographicsociety.ViewServer;
 import org.salephoto.salephotographicsociety.view.NavigationDrawerLayout;
 import org.salephoto.salephotographicsociety.R;
 import org.salephoto.salephotographicsociety.bus.BusProvider;
-import org.salephoto.salephotographicsociety.events.EventEvent;
 import org.salephoto.salephotographicsociety.repository.ApiErrorEvent;
 import org.salephoto.salephotographicsociety.repository.RepositoryProvider;
 import org.salephoto.salephotographicsociety.repository.RepositoryService;
@@ -31,7 +31,6 @@ public class MainActivity extends ActionBarActivity
 
     private NavigationDrawerLayout mainLayout;
     private boolean dualPane;
-    private CompetitionDetailFragment competitionDetails;
 
     private Bus bus;
 
@@ -60,11 +59,17 @@ public class MainActivity extends ActionBarActivity
             mainLayout.onNavigationItemSelected(1, false);
         }
 
-        competitionDetails = new CompetitionDetailFragment();
-
         final RepositoryService repositoryService = RepositoryProvider.getRepository();
         getBus().register(repositoryService);
         getBus().register(this);
+
+        ViewServer.get(this).addWindow(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ViewServer.get(this).removeWindow(this);
     }
 
     @Override
@@ -150,6 +155,7 @@ public class MainActivity extends ActionBarActivity
         super.onResume();
 
         getBus().register(this);
+        ViewServer.get(this).setFocusedWindow(this);
     }
 
     @Override
@@ -169,28 +175,15 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onEventSelected(int eventId) {
-//        getBus().post(new GetEventEvent(eventId));
-    }
-
-    @Subscribe
-    public void onEventLoaded(final EventEvent event) {
-//        final EventFragment fragment = EventFragment.newInstance(event.getEvent());
-//        if (dualPane) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.details, fragment)
-//                            // just using commit causes an IllegalStateException when device resumes
-//                    .commitAllowingStateLoss();
-//        } else {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.main_contents, fragment)
-//                    .addToBackStack(null)
-//                    .commit();
-//        }
+        final EventDetailFragment eventDetails
+                = EventDetailFragment.newInstance(eventId);
+        useFragment(eventDetails);
     }
 
     @Override
     public void onCompetitionSelected(int competitionId) {
-        competitionDetails.setCurrentItemId(competitionId);
+        final CompetitionDetailFragment competitionDetails
+            = CompetitionDetailFragment.newInstance(competitionId);
         useFragment(competitionDetails);
     }
 

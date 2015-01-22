@@ -13,6 +13,7 @@ import com.squareup.otto.Subscribe;
 import org.salephoto.models.Event;
 import org.salephoto.salephotographicsociety.R;
 import org.salephoto.salephotographicsociety.events.EventsListedEvent;
+import org.salephoto.salephotographicsociety.events.ListEventsEvent;
 
 
 public class EventListFragment extends AbstractEventListFragment {
@@ -28,6 +29,11 @@ public class EventListFragment extends AbstractEventListFragment {
 
         adapter = new EventListAdapter(getActivity());
         setListAdapter(adapter);
+    }
+
+    public void requestItems() {
+        getBus().post(new ListEventsEvent(getArguments().getInt(ARG_ID),
+            getBefore(), getAfter(), 5, getListAdapter().getCount(), getOrder()));
     }
 
     @Subscribe

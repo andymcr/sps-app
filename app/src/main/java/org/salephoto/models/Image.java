@@ -4,13 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public class Image implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class Image {
 	private int id;
 	private String title;
 	private Person author;
-//	@XmlJavaTypeAdapter(BooleanAdapter.class)
 	private boolean hasAward;
 	private List<Entry> entries;
 
@@ -53,6 +50,11 @@ public class Image implements Serializable {
 	public void setEntries(final List<Entry> newEntries) {
 		entries = newEntries;
 	}
+
+    @Override
+    public String toString() {
+        return getTitle();
+    }
 
 	@Override
 	public int hashCode() {

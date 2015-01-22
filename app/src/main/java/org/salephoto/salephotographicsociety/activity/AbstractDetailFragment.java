@@ -4,13 +4,21 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.squareup.otto.Bus;
 
+import org.salephoto.models.EventCore;
 import org.salephoto.salephotographicsociety.R;
 import org.salephoto.salephotographicsociety.bus.BusProvider;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 public abstract class AbstractDetailFragment extends Fragment {
@@ -18,16 +26,29 @@ public abstract class AbstractDetailFragment extends Fragment {
 
     private int currentItemId = ListView.INVALID_POSITION;
     private RecyclerView viewPager;
-    private RecyclerView.LayoutManager layoutManager;
     private Bus bus;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if ((savedInstanceState != null) && getArguments().containsKey(ARG_INITIAL_ITEM_ID)) {
+        if ((savedInstanceState != null) && (getArguments() != null)
+                && getArguments().containsKey(ARG_INITIAL_ITEM_ID)) {
             currentItemId = getArguments().getInt(ARG_INITIAL_ITEM_ID);
         }
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+            final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.details_list, container, false);
+
+        viewPager = (RecyclerView) view.findViewById(R.id.pager);
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        viewPager.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        return view;
     }
 
     @Override
@@ -37,21 +58,8 @@ public abstract class AbstractDetailFragment extends Fragment {
         }
     }
 
-    public int getCurrentItemId() {
-        return currentItemId;
-    }
-
-    public void setCurrentItemId(final int newItemId) {
-        currentItemId = newItemId;
-    }
-
-    @Override
-    public void onViewCreated(final View view, final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        viewPager = (RecyclerView) view.findViewById(R.id.pager);
-        layoutManager = new LinearLayoutManager(getActivity());
-        viewPager.setLayoutManager(layoutManager);
+    protected void setInitialItemId(final int initialItemId) {
+        currentItemId = initialItemId;
     }
 
     protected void setAdapter(final RecyclerView.Adapter adapter) {
@@ -78,6 +86,56 @@ public abstract class AbstractDetailFragment extends Fragment {
         }
 
         return bus;
+    }
+
+    protected abstract class DetailAdapter<S extends EventCore,
+            T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> {
+        private List<S> items = new ArrayList<>();
+        private SimpleDateFormat dateFormat
+                = new SimpleDateFormat(getResources().getString(R.string.summary_date_pattern));
+
+        public String formatDate(final Date date) {
+            return dateFormat.format(date);
+        }
+
+        public S first() {
+            if (items.size() > 0) {
+                return items.get(0);
+            } else {
+                return null;
+            }
+        }
+
+        public void add(final int position, final S item) {
+            items.add(position, item);
+            notifyItemInserted(position);
+        }
+
+        public S get(final int position) {
+            if (items.size() > 0) {
+                if (position == 0) {
+                    requestPrevious(items.get(0).getStartTime());
+                }
+                if (position == items.size() - 1) {
+                    requestNext(items.get(items.size() - 1).getStartTime());
+                }
+            }
+
+            return items.get(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.size();
+        }
+
+        public abstract void requestPrevious(final Date date);
+
+        public abstract void requestNext(final Date date);
+
+        public void update(final S item) {
+            notifyItemChanged(items.indexOf(item));
+        }
     }
 
 }

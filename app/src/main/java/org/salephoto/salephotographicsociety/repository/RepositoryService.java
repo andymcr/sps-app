@@ -1,7 +1,7 @@
 package org.salephoto.salephotographicsociety.repository;
 
+import android.content.Context;
 import android.os.StrictMode;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,16 +14,25 @@ import com.squareup.otto.Subscribe;
 
 import org.salephoto.models.Competition;
 import org.salephoto.models.Event;
+import org.salephoto.models.Section;
 import org.salephoto.models.Talk;
 import org.salephoto.salephotographicsociety.ApiService;
+import org.salephoto.salephotographicsociety.R;
 import org.salephoto.salephotographicsociety.bus.BusProvider;
 import org.salephoto.salephotographicsociety.events.AbstractListEvent;
+import org.salephoto.salephotographicsociety.events.AbstractListEventEvent;
 import org.salephoto.salephotographicsociety.events.CompetitionEvent;
+import org.salephoto.salephotographicsociety.events.CompetitionUpdatedEvent;
 import org.salephoto.salephotographicsociety.events.CompetitionsListedEvent;
+import org.salephoto.salephotographicsociety.events.EventEvent;
 import org.salephoto.salephotographicsociety.events.EventsListedEvent;
 import org.salephoto.salephotographicsociety.events.GetCompetitionEvent;
-import org.salephoto.salephotographicsociety.events.ListEventEvent;
+import org.salephoto.salephotographicsociety.events.GetEventEvent;
+import org.salephoto.salephotographicsociety.events.ListCompetitionsEvent;
+import org.salephoto.salephotographicsociety.events.ListEventsEvent;
+import org.salephoto.salephotographicsociety.events.ListTalksEvent;
 import org.salephoto.salephotographicsociety.events.TalksListedEvent;
+import org.salephoto.salephotographicsociety.events.UpdateCompetitionEvent;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -47,7 +56,8 @@ public class RepositoryService {
     private ApiService api;
     private Bus bus;
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d HH:mm:ss");
+        //= new SimpleDateFormat(context.getResources().getString(R.string.full_time_pattern));
 
 
     public RepositoryService() {
@@ -77,7 +87,7 @@ public class RepositoryService {
                 }
             };
             final RestAdapter restAdapter = new RestAdapter.Builder()
-//                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint("http://sps.andycarpenter.me.uk/api")
                 .setRequestInterceptor(requestInterceptor)
                 .setConverter(new GsonConverter(gson))
@@ -89,9 +99,9 @@ public class RepositoryService {
     }
 
     @Subscribe
-    public void onListCompetitions(final ListEventEvent<Competition> event) {
+    public void onListCompetitions(final ListCompetitionsEvent event) {
         getApi().listCompetitions(formatDate(event.getBefore()), formatDate(event.getAfter()),
-            dateOrder(event.getOrder()), event.getLimit(), event.getOffset(),
+            dateOrder(event.getOrder()), event.getLimit(), event.getOffset(), event.getFieldQuery(),
             new Callback<List<Competition>>() {
                 @Override
                 public void success(List<Competition> competitions, Response response) {
@@ -100,9 +110,6 @@ public class RepositoryService {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    if (error.getKind() == RetrofitError.Kind.NETWORK) {
-                        Log.d(getClass().getSimpleName(), "List competitions failure", error);
-                    }
                     getBus().post(new ApiErrorEvent(error));
                 }
             });
@@ -110,8 +117,8 @@ public class RepositoryService {
 
     @Subscribe
     public void onGetCompetition(final GetCompetitionEvent event) {
-        getApi().getCompetition(event.getCompetitionId(),
-                event.getSectionOrder().queryValue(), event.getEntryOrder().queryValue(),
+        getApi().getCompetition(event.getCompetitionId(), event.getSectionOrder().queryValue(),
+                event.getEntryOrder().queryValue(), event.getFieldQuery(),
                 new Callback<Competition>() {
                     @Override
                     public void success(Competition competition, Response response) {
@@ -126,9 +133,29 @@ public class RepositoryService {
     }
 
     @Subscribe
-    public void onListEvents(final ListEventEvent<Event> event) {
+    public void onUpdateCompetition(final UpdateCompetitionEvent event) {
+        final Competition competition =event.getCompetition();
+        getApi().getSections(competition.getId(),
+                null, null, event.getFieldQuery(),
+                new Callback<List<Section>>() {
+                    @Override
+                    public void success(List<Section> sections, Response response) {
+                        competition.setSections(sections);
+                        getBus().post(new CompetitionUpdatedEvent(competition));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        getBus().post(new ApiErrorEvent(error));
+                    }
+                });
+    }
+
+    @Subscribe
+    public void onListEvents(final ListEventsEvent event) {
         getApi().listEvents(formatDate(event.getBefore()), formatDate(event.getAfter()),
                 dateOrder(event.getOrder()), event.getLimit(), event.getOffset(),
+                event.getFieldQuery(),
                 new Callback<List<Event>>() {
                     @Override
                     public void success(List<Event> events, Response response) {
@@ -137,18 +164,32 @@ public class RepositoryService {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        if (error.getKind() == RetrofitError.Kind.NETWORK) {
-                            Log.d(getClass().getSimpleName(), "List events failure", error);
-                        }
                         getBus().post(new ApiErrorEvent(error));
                     }
                 });
     }
 
     @Subscribe
-    public void onListTalks(final ListEventEvent<Talk> event) {
+    public void onGetEvent(final GetEventEvent event) {
+        getApi().getEvent(event.getEventId(), event.getFieldQuery(),
+                new Callback<Event>() {
+                    @Override
+                    public void success(Event event, Response response) {
+                        getBus().post(new EventEvent(event));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        getBus().post(new ApiErrorEvent(error));
+                    }
+                });
+    }
+
+    @Subscribe
+    public void onListTalks(final ListTalksEvent event) {
         getApi().listTalks(formatDate(event.getBefore()), formatDate(event.getAfter()),
                 dateOrder(event.getOrder()), event.getLimit(), event.getOffset(),
+                event.getFieldQuery(),
                 new Callback<List<Talk>>() {
                     @Override
                     public void success(List<Talk> talks, Response response) {
@@ -157,9 +198,6 @@ public class RepositoryService {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        if (error.getKind() == RetrofitError.Kind.NETWORK) {
-                            Log.d(getClass().getSimpleName(), "List talks failure", error);
-                        }
                         getBus().post(new ApiErrorEvent(error));
                     }
                 });
@@ -176,8 +214,8 @@ public class RepositoryService {
 
     private String dateOrder(Map<String, AbstractListEvent.Order> order) {
         String orderText = null;
-        if (order.containsKey(ListEventEvent.FIELD_DATE)) {
-            orderText = ListEventEvent.FIELD_DATE + order.get(ListEventEvent.FIELD_DATE).name();
+        if (order.containsKey(AbstractListEventEvent.FIELD_DATE)) {
+            orderText = AbstractListEventEvent.FIELD_DATE + order.get(AbstractListEventEvent.FIELD_DATE).name();
         }
 
         return orderText;

@@ -11,4 +11,8 @@
 
     <dimen name="default_padding">16dp</dimen>
     <dimen name="tab_padding">4dp</dimen>
+
+    <dimen name="details_min_width">300dp</dimen>
+    <dimen name="details_title_padding">4dp</dimen>
+    <dimen name="details_label_width">100dp</dimen>
 </resources>

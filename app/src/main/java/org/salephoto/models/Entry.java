@@ -2,9 +2,7 @@ package org.salephoto.models;
 
 import java.io.Serializable;
 
-public class Entry implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class Entry {
 	private int id;
 	private String title;
 	private Person author;
@@ -95,6 +93,11 @@ public class Entry implements Serializable {
 	public void setPoints(final int newPoints) {
 		points = newPoints;
 	}
+
+    @Override
+    public String toString() {
+        return getTitle();
+    }
 
 	@Override
 	public int hashCode() {

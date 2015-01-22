@@ -3,9 +3,7 @@ package org.salephoto.models;
 import java.io.Serializable;
 import java.util.List;
 
-public class Organisation implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class Organisation {
 	private int id;
 	private String name;
 	private List<Person> members;
@@ -34,7 +32,12 @@ public class Organisation implements Serializable {
 		members = newMembers;
 	}
 
-	@Override
+    @Override
+    public String toString() {
+        return getName();
+    }
+
+    @Override
 	public int hashCode() {
 		return getId();
 	}

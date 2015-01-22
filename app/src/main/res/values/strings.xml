@@ -11,8 +11,19 @@
     <string name="tab_label_past">Past</string>
     <string name="tab_label_future">Future</string>
 
+    <string name="details_title_placeholder">title</string>
+    <string name="details_date_label">Date</string>
+    <string name="details_date_placeholder">date</string>
+    <string name="details_secretary_label">Secretary</string>
+    <string name="details_secretary_placeholder">secretary</string>
+    <string name="details_judge_label">Judge</string>
+    <string name="details_judges_label">Judges</string>
+    <string name="details_judges_placeholder">judge</string>
+    <string name="details_venue_label">Venue</string>
+    <string name="details_venue_placeholder">venue</string>
+
     <string name="summary_date_pattern">d MMM</string>
-    <string name="full_date_pattern">d MMM yyyy</string>
+    <string name="full_time_pattern">d MMM yyyy HH:mm:ss</string>
 
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>

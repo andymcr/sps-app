@@ -1,13 +1,9 @@
 package org.salephoto.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
 import java.util.Date;
 
 
-abstract public class EventCore implements Parcelable {
+abstract public class EventCore {
 	private int id;
 	private boolean draft;
 	private boolean cancelled;
@@ -72,23 +68,9 @@ abstract public class EventCore implements Parcelable {
 		venue = newVenue;
 	}
 
-    protected EventCore(final Parcel parcel) {
-        id = parcel.readInt();
-        draft = parcel.readInt() == 1;
-        cancelled = (parcel.readInt() == 1);
-        title = parcel.readString();
-        startTime = new Date(parcel.readLong());
-        duration = parcel.readString();
-    }
-
     @Override
-    public void writeToParcel(final Parcel parcel, final int flags) {
-        parcel.writeInt(id);
-        parcel.writeInt(draft ? 1 : 0);
-        parcel.writeInt(cancelled ? 1 : 0);
-        parcel.writeString(title);
-        parcel.writeLong(startTime.getTime());
-        parcel.writeString(duration);
+    public String toString() {
+        return getTitle();
     }
 
 }

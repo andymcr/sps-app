@@ -3,15 +3,12 @@ package org.salephoto.salephotographicsociety.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import org.salephoto.salephotographicsociety.R;
 import org.salephoto.salephotographicsociety.events.AbstractListEvent;
-import org.salephoto.salephotographicsociety.events.ListEventEvent;
+import org.salephoto.salephotographicsociety.events.AbstractListEventEvent;
 
 import java.util.Date;
 
@@ -38,7 +35,7 @@ public class EventListPagerFragment extends AbstractListPagerFragment {
             Fragment fragment = new EventListFragment();
             Bundle args = new Bundle();
             args.putInt(AbstractListFragment.ARG_ID, position);
-            args.putString(AbstractListFragment.ARG_ORDER_FIELD, ListEventEvent.FIELD_DATE);
+            args.putString(AbstractListFragment.ARG_ORDER_FIELD, AbstractListEventEvent.FIELD_DATE);
             if (position == 0) {
                 args.putString(AbstractListFragment.ARG_ORDER_DIRECTION,
                         AbstractListEvent.Order.Descending.name());

@@ -65,15 +65,39 @@
         <item name="android:colorBackground">@color/spsColorBackground</item>
     </style>
 
-    <style name="DetailsFrame" parent="AppTheme">
-
+    <style name="Details" parent="AppTheme">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
     </style>
 
-    <style name="DetailsField" parent="AppTheme">
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
+    <style name="Details.Frame" parent="Details">
+        <item name="android:minWidth">@dimen/details_min_width</item>
+    </style>
+
+    <style name="Details.Field" parent="Details">
+    </style>
+
+    <style name="Details.Field.Title" parent="Details.Field">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:paddingTop">@dimen/details_title_padding</item>
+        <item name="android:paddingBottom">@dimen/details_title_padding</item>
         <item name="android:paddingStart">@dimen/default_padding</item>
         <item name="android:paddingEnd">@dimen/default_padding</item>
+    </style>
+
+    <style name="Details.Field.Label" parent="Details.Field">
+        <item name="android:paddingStart">@dimen/default_padding</item>
+    </style>
+
+    <style name="Details.Field.Value" parent="Details.Field">
+        <item name="android:paddingEnd">@dimen/default_padding</item>
+    </style>
+
+    <style name="Details.Sections" parent="Details">
+        <item name="android:paddingStart">@dimen/default_padding</item>
+        <item name="android:paddingEnd">@dimen/default_padding</item>
+    </style>
+
+    <style name="Details.Sections.Summary" parent="Details">
     </style>
 </resources>
 

@@ -4,9 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 
-public class Person implements Parcelable {
+public class Person {
 	private int id;
-	private String fullName;
+	private String name;
 
 	public int getId() {
 		return id;
@@ -17,39 +17,17 @@ public class Person implements Parcelable {
 	}
 
 	public String getName() {
-		return fullName;
+		return name;
 	}
 
 	public void setName(final String newName) {
-		fullName = newName;
+		this.name = newName;
 	}
 
     @Override
-    public int describeContents() {
-        return 0;
+    public String toString() {
+        return getName();
     }
-
-    protected Person(final Parcel parcel) {
-
-        id = parcel.readInt();
-        fullName = parcel.readString();
-    }
-
-    @Override
-    public void writeToParcel(final Parcel parcel, final int flags) {
-        parcel.writeInt(id);
-        parcel.writeString(fullName);
-    }
-
-    public static final Parcelable.Creator CREATOR = new Competition.Creator() {
-        public Competition createFromParcel(Parcel in) {
-            return new Competition(in);
-        }
-
-        public Competition[] newArray(int size) {
-            return new Competition[size];
-        }
-    };
 
     @Override
 	public int hashCode() {

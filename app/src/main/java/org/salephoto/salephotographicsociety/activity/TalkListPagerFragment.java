@@ -8,7 +8,7 @@ import android.view.View;
 
 import org.salephoto.salephotographicsociety.R;
 import org.salephoto.salephotographicsociety.events.AbstractListEvent;
-import org.salephoto.salephotographicsociety.events.ListEventEvent;
+import org.salephoto.salephotographicsociety.events.AbstractListEventEvent;
 
 import java.util.Date;
 
@@ -35,7 +35,7 @@ public class TalkListPagerFragment extends AbstractListPagerFragment {
             Fragment fragment = new TalkListFragment();
             Bundle args = new Bundle();
             args.putInt(AbstractListFragment.ARG_ID, position);
-            args.putString(AbstractListFragment.ARG_ORDER_FIELD, ListEventEvent.FIELD_DATE);
+            args.putString(AbstractListFragment.ARG_ORDER_FIELD, AbstractListEventEvent.FIELD_DATE);
             if (position == 0) {
                 args.putString(AbstractListFragment.ARG_ORDER_DIRECTION,
                         AbstractListEvent.Order.Descending.name());

@@ -53,6 +53,11 @@ public class Section implements Serializable {
 		entries = newEntries;
 	}
 
+    @Override
+    public String toString() {
+        return getTitle();
+    }
+
 	@Override
 	public int hashCode() {
 		return getId();

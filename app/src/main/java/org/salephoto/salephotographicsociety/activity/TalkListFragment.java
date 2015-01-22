@@ -12,6 +12,7 @@ import com.squareup.otto.Subscribe;
 
 import org.salephoto.models.Talk;
 import org.salephoto.salephotographicsociety.R;
+import org.salephoto.salephotographicsociety.events.ListTalksEvent;
 import org.salephoto.salephotographicsociety.events.TalksListedEvent;
 
 
@@ -28,6 +29,11 @@ public class TalkListFragment extends AbstractEventListFragment {
 
         adapter = new TalkListAdapter(getActivity());
         setListAdapter(adapter);
+    }
+
+    public void requestItems() {
+        getBus().post(new ListTalksEvent(getArguments().getInt(ARG_ID),
+            getBefore(), getAfter(), 5, getListAdapter().getCount(), getOrder()));
     }
 
     @Subscribe

@@ -35,20 +35,6 @@ public class Event extends EventCore {
 	}
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    protected Event(final Parcel parcel) {
-        super(parcel);
-    }
-
-    @Override
-    public void writeToParcel(final Parcel parcel, final int flags) {
-        super.writeToParcel(parcel, flags);
-    }
-
-    @Override
     public int hashCode() {
         return getId();
     }

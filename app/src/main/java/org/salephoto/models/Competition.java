@@ -64,47 +64,6 @@ public class Competition extends EventCore {
 	}
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    protected Competition(final Parcel parcel) {
-        super(parcel);
-
-        rank = parcel.readInt();
-        maxScore = parcel.readInt();
-        handinDate = new Date(parcel.readLong());
-        secretary = parcel.readParcelable(Person.class.getClassLoader());
-        parcel.readTypedList(judges, Person.CREATOR);
-    }
-
-    @Override
-    public void writeToParcel(final Parcel parcel, final int flags) {
-        super.writeToParcel(parcel, flags);
-
-        parcel.writeInt(rank);
-        parcel.writeInt(maxScore);
-        parcel.writeLong(handinDate.getTime());
-        parcel.writeParcelable(secretary, flags);
-        parcel.writeTypedList(judges);
-    }
-
-    public static final Parcelable.Creator CREATOR = new Competition.Creator() {
-        public Competition createFromParcel(Parcel in) {
-            return new Competition(in);
-        }
-
-        public Competition[] newArray(int size) {
-            return new Competition[size];
-        }
-    };
-
-    @Override
-    public String toString() {
-        return getTitle();
-    }
-
-    @Override
     public int hashCode() {
         return getId();
     }

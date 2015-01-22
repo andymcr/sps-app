@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/Details.Frame" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="@string/details_title_placeholder"
+        style="@style/Details.Field.Title" />
+
+    <TextView
+        android:id="@+id/date_label"
+        android:layout_width="@dimen/details_label_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:text="@string/details_date_label"
+        style="@style/Details.Field.Label" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_toEndOf="@+id/date_label"
+        android:text="@string/details_date_placeholder"
+        style="@style/Details.Field.Value" />
+
+    <TextView
+        android:id="@+id/secretary_label"
+        android:layout_width="@dimen/details_label_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:text="@string/details_secretary_label"
+        style="@style/Details.Field.Label" />
+
+    <TextView
+        android:id="@+id/secretary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date"
+        android:layout_toEndOf="@id/secretary_label"
+        android:text="@string/details_secretary_placeholder"
+        style="@style/Details.Field.Value" />
+
+    <TextView
+        android:id="@+id/judges_label"
+        android:layout_width="@dimen/details_label_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/secretary"
+        android:text="@string/details_judge_label"
+        style="@style/Details.Field.Label" />
+
+    <TextView
+        android:id="@+id/judges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/secretary"
+        android:layout_toEndOf="@id/judges_label"
+        android:text="@string/details_judges_placeholder"
+        style="@style/Details.Field.Value" />
+
+    <ListView
+        android:id="@+id/sections"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/judges"
+        style="@style/Details.Sections" />
+</RelativeLayout>

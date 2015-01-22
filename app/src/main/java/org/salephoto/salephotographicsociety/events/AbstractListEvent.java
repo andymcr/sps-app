@@ -4,9 +4,10 @@ import android.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
-abstract public class AbstractListEvent {
+abstract public class AbstractListEvent extends AbstractEvent {
     private Integer limit;
     private Integer offset;
     private Map<String, Order> order = new HashMap<>();
@@ -14,13 +15,20 @@ abstract public class AbstractListEvent {
     public AbstractListEvent() {
     }
 
-    public AbstractListEvent(final Integer limit, final Integer offset) {
-        this.limit = limit;
-        this.offset = offset;
+    public AbstractListEvent(final Integer limit, final Integer offset,
+            final Pair<String, Order> order) {
+        init(limit, offset, order);
     }
 
-    public AbstractListEvent(final Integer limit, final Integer offset, final Pair<String, Order> order) {
-        this(limit, offset);
+    public AbstractListEvent(final Integer limit, final Integer offset,
+            final Pair<String, Order> order, final Set<String> fields) {
+        super(fields);
+        init(limit, offset, order);
+    }
+
+    public void init(final Integer limit, final Integer offset, final Pair<String, Order> order) {
+        this.limit = limit;
+        this.offset = offset;
         addOrder(order);
     }
 
